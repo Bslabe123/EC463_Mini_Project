@@ -1,0 +1,19 @@
+#LoggedInContent
+{
+	display: none;
+}
+
+h1, h2
+{
+	width: 30%;
+	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+button
+{
+	display: block;
+	margin: auto;
+}

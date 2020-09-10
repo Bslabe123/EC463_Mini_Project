@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Google Auth Demo</title>
+	<meta name="google-signin-client_id" content="Client ID">
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="LoggedOutContent">
+		<h1>Welcome to your personal home monitor!</h1>
+		<h2>Please use the button below to sign in!</h2>
+		<div class="g-signin2" data-onsuccess="onSignIn"></div>
+	</div>
+	
+	<div id="LoggedInContent">
+		<h1>Welcome, <span id="targetName">User</span>!</h1>
+		<h2>Below are your home monitors</h2>
+		<button id="signOut">Sign out</button>
+	</div>
+
+
+
+	<script src="script.js"></script>
+
+</body>
+</html>
