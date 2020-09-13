@@ -16,10 +16,10 @@ app.get("/",function(req,res) {
 })
 
 app.get("/loginPage",function(req, res) {
-	res.sendFile("C:/Users/Owner/Desktop/MiniProject/views/loggedOut.html");
+	res.sendFile("./views/loggedOut.html",  { root: __dirname });
 })
 
-app.post("/register", function(req, res) {
+app.post("./register", function(req, res) {
 	console.log(req.body);
 	var partialID = req.body.theName.substring(0,30);
 	var obj = {
@@ -27,7 +27,7 @@ app.post("/register", function(req, res) {
 	};
 	obj.table.push({id: partialID, data: [["bedroom",1,2,3]]});
 	var json = JSON.stringify(obj);
-	fs.writeFile("./userData.json",json,function(err) {
+	fs.writeFile("./newData.json",json,function(err) {
 	if (err) {
         console.log('Error writing file', err)
     } else {
@@ -38,7 +38,7 @@ app.post("/register", function(req, res) {
 })
 
 app.get("/loggedIn",function(req,res) {
-	res.sendFile("C:/Users/Owner/Desktop/MiniProject/views/loggedIn.html");
+	res.sendFile("/views/loggedIn.html");
 })
 
 app.listen(8000, function() {
