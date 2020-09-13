@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+    <title>Logged Out</title>
+    <meta name="google-signin-client_id" content="client ID">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <style>
+        #partiallyLoggedIn
+        {
+          display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to your personal home monitor!</h1>
+    <h2>Please use the button below to sign in!</h2>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+    <div id="partiallyLoggedIn">
+      <h3>You have logged in! Use the button below to access your home monitor data!</h3>
+      <form action="/loggedIn">
+        <input type="submit" value="View data">
+      </form>
+    </div>
+
+
+    <script>
+      function onSignIn(googleUser) {
+        alert("You have signed in");
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+        document.querySelector("#partiallyLoggedIn").style.display = "block";
+      };
+    </script>
+
+
+  </body>
+</html>
+
