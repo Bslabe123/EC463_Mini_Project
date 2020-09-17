@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Logged In</title>
+	<style>
+		.charts
+		{
+			width: 600px;
+			height: 600px;
+		}
+
+        .tInput
+        {
+            width: 50%;
+        }
+	</style>
+</head>
+<body>
+	<h1>Here is your sensor data! Use the forms at the bottom of the page to add new sensors or remove existing ones (there can up to 4 sensors at a time)</h1>
+
+    <!--The 4 divs below represent spaces for the graphs of the 4 sensors -->
+	<div class="charts">
+	<canvas id="chart1"></canvas>
+	</div>
+
+	<div class="charts">
+	<canvas id="chart2"></canvas>
+	</div>
+
+	<div class="charts">
+	<canvas id="chart3"></canvas>
+	</div>
+
+	<div class="charts">
+	<canvas id="chart4"></canvas>
+	</div>
+
+    <!-- The form used to request a new sensor to be added -->
+	<div>
+    <h4>Please use the form below to add new sensors</h4>
+	<form action="/addSensor" method="POST">
+		<input class="tInput" type="text" name="sensorName" placeholder="Sensor room (example: bedroom)">
+		<button>Add room</button>
+	</form>
+	</div>
+
+    <!-- The form used to request to remove a sensor -->
+    <div>
+    <h4>Please use the form below to remove an existing sensor</h4>
+    <form action="/removeSensor" method="POST">
+        <input class="tInput" type="text" name="sensorName" placeholder="Sensor room (example: bedroom)">
+        <button>Remove room</button>
+    </form>
+    </div>
+
+    <!-- Button to return to home page -->
+    <div>
+	<a href="/">Return to home page</a>
+    </div>
+
+	<div>
+	</div>
+
+	
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+	<script>
+
+		getData();
+		async function getData() {
+            //The function gets the current user's sensor data from the database to graph
+			var response = await fetch("/api");
+			var arrivingData = await response.json();
+            console.log(arrivingData);
+
+            //Of course, a user can have less than 4 sensors, so in that not all of the 4 graphs are used to graph
+            //sensor data. There will always be 4 graphs displayed, but if a graph is unused it will have the title "no sensor"
+			while (arrivingData.length < 4) {
+				arrivingData.push({user: "N/A", sensorName: "No sensor", temperatures: [0,0,0,0,0], humitities: [0,0,0,0,0]});
+			}
+
+            
+            //The code below is data used to generate the graphs. 
+			var ctx = document.getElementById('chart1').getContext('2d');
+			var chart = new Chart(ctx, {
+    		// The type of chart we want to create
+    		type: 'line',
+    		data: {
+        	labels: ["1","2","3","4","5"],
+        	datasets: [{
+            label: "Temperatures",
+            borderColor: "red",
+            data: arrivingData[0].temperatures
+        	},{
+        		label: "Humidities",
+            	borderColor: "blue",
+            	data: arrivingData[0].humidities
+        	}]
+    		},
+    		options: {
+    					title: {
+            display: true,
+            text: arrivingData[0].sensorName
+        				}
+    		}
+			});
+
+			var ctx = document.getElementById('chart2').getContext('2d');
+			var chart = new Chart(ctx, {
+    		type: 'line',
+    		data: {
+        	labels: ["1","2","3","4","5"],
+        	datasets: [{
+            label: "Temperatures",
+            borderColor: "red",
+            data: arrivingData[1].temperatures
+        	},{
+        		label: "Humidities",
+            	borderColor: "blue",
+            	data: arrivingData[1].humidities
+        	}]
+    		},
+    		options: {
+                title: {
+                    display: true,
+                    text: arrivingData[1].sensorName
+                    }
+    		}
+			});
+
+
+			var ctx = document.getElementById('chart3').getContext('2d');
+			var chart = new Chart(ctx, {
+    		type: 'line',
+    		data: {
+        	labels: ["1","2","3","4","5"],
+        	datasets: [{
+            label: "Temperatures",
+            borderColor: "red",
+            data: arrivingData[2].temperatures
+        	},{
+        		label: "Humidities",
+            	borderColor: "blue",
+            	data: arrivingData[2].humidities
+        	}]
+    		},
+    		options: {
+                    title: {
+                    display: true,
+                    text: arrivingData[2].sensorName
+                    }
+    		}
+			});
+
+
+			var ctx = document.getElementById('chart4').getContext('2d');
+			var chart = new Chart(ctx, {
+    		type: 'line',
+    		data: {
+        	labels: ["1","2","3","4","5"],
+        	datasets: [{
+            label: "Temperatures",
+            borderColor: "red",
+            data: arrivingData[3].temperatures
+        	},{
+        		label: "Humidities",
+            	borderColor: "blue",
+            	data: arrivingData[3].humidities
+        	}]
+    		},
+    		options: {
+                     title: {
+                        display: true,
+                        text: arrivingData[3].sensorName
+                    }
+    		}
+			});
+
+        
+		}
+		
+		
+	
+	</script>
+</body>
+</html>

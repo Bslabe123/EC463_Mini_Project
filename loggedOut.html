@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+    <title>Logged Out</title>
+    <!--Scrips used to get the google sign in button-->
+    <meta name="google-signin-client_id" content="OAuth 2.0 google client ID with authorized javascript origins url being https://localhost:8000">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <style>
+        #partiallyLoggedIn
+        {
+          display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Displays a welcome message and the google sign in button -->
+    <h1>Welcome to your personal home monitor!</h1>
+    <h2>Please use the button below to sign in!</h2>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+    <!-- When the user signs in, they are able to press a button the view their data -->
+    <div id="partiallyLoggedIn">
+      <h3>You have logged in! Use the button below to access your home monitor data!</h3>
+      <form action="/register" method="POST">
+        <input type="hidden" id="sendID" name="theName" value="">
+        <input type="submit" value="View sensor data">
+      </form>
+      <a href="/" onclick="signOut();">Sign out</a>
+    </div>
+
+
+    <script>
+      //Functions to handle the user signing in and out
+      function onSignIn(googleUser) {
+        alert("You have signed in");
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        var id_token = profile.getId();
+        document.querySelector("#partiallyLoggedIn").style.display = "block";
+        document.querySelector("#sendID").value = id_token;
+      };
+
+
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+        console.log('User signed out.');
+        });
+        location.reload(true);
+        alert("You have signed out");
+      };
+
+
+    </script>
+
+
+  </body>
+</html>
