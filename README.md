@@ -9,7 +9,9 @@ The app form doesnt allow for custom URLs for each of the sensors (these are har
 An extra textbox can also be added to account for this.
 
 # How to use
-cd into the root folder of the project and start the service with
+cd into the root folder of the project. Next, modify the loggedOut.html with the client ID. Add your google OAuth client ID to line 5, it should be assigned to "content". Save and close.
+
+Now start the service with
 > node app.js 
 
 
